@@ -15,20 +15,27 @@ function Todo() {
     const submitForm = (e) => {
         e.preventDefault()
         dispatch(addTodo(input))
+        setInput('') // Reset input state to empty string after adding a new item
+    }
+
+    const handleClear = () => {
+        dispatch(clearTodos())
+        setInput('') // Reset input state to empty string after clearing the list
     }
 
     return (
         <div>
             <form onSubmit={(e) => submitForm(e)}>
-                <input type="text" onChange={(e) => setInput(e.target.value)} />
+                <input type="text" onChange={(e) => setInput(e.target.value)} value={input} />
                 <button type="submit">Submit</button>
             </form>
             <ul>
                 {renderItems}
             </ul>
-            <button onClick={() => dispatch(clearTodos())}>Clear</button>
+            <button onClick={handleClear}>Clear</button>
         </div>
     )
 }
 
 export default Todo
+
