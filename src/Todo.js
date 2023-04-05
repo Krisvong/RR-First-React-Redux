@@ -3,24 +3,34 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addTodo, removeTodo, clearTodos } from './features/todoSlice'
 
 function Todo() {
+    // Access the items array from the todo slice using the useSelector hook
     const items = useSelector((state) => state.todo.items)
+    // Access the dispatch function using the useDispatch hook
     const dispatch = useDispatch()
+    // Define a local state for the input value
     const [input, setInput] = useState('')
 
     let renderItems = null
+    // If there are items in the array, render each item as a li element
     if (items && items.length > 0) {
         renderItems = items.map((item, index) => <li key={index} onClick={() => dispatch(removeTodo(index))}>{item}</li>)
     }
 
+    // Define a function to handle form submission
     const submitForm = (e) => {
         e.preventDefault()
+        // Dispatch the addTodo action with the input value as the payload
         dispatch(addTodo(input))
-        setInput('') // Reset input state to empty string after adding a new item
+        // Reset the input state to an empty string
+        setInput('')
     }
 
+    // Define a function to handle the clear button click
     const handleClear = () => {
+        // Dispatch the clearTodos action
         dispatch(clearTodos())
-        setInput('') // Reset input state to empty string after clearing the list
+        // Reset the input state to an empty string
+        setInput('')
     }
 
     return (
@@ -37,5 +47,5 @@ function Todo() {
     )
 }
 
+// Export the Todo component as the default export of the module
 export default Todo
-
